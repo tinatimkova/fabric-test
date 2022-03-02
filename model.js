@@ -10,7 +10,7 @@ const pool = new Pool({
 
 
 const getData = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(function(resolve, reject) {
         pool.query('SELECT * from movies', (error, results) => {
            if (error) {
                reject(error)

@@ -1,11 +1,11 @@
 
 const express = require('express'); // we can't use import syntax. it's common.js 
+const model = require('./model.js');
 const app = express();
 const port = 5000;
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-const model = require('./model.js');
 
 // app.use(express.json())
 // app.use(function(req, res, next) {
@@ -18,7 +18,15 @@ const model = require('./model.js');
 // ROUTES
 
 // GET 
-app.get('/', (req, res) => res.json({msg: 'Welcome to local API'}));
+app.get('/', (req, res) => {
+    model.getData()
+        .then(response => {
+            res.status(200).json(response);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        })
+});
 
 // POST 
 app.post('/', (req, res) => {
