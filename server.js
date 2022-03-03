@@ -13,12 +13,13 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 connectDB();
 
 // app.use(express.json())
-// app.use(function(req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
-//     next();  
-// })
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
+    next();  
+})
+
 //middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // these methods will parse the incoming requests and extract the body
@@ -42,22 +43,15 @@ let query1 = format('INSERT INTO movies(title, year, imdbid, type) VALUES %L RET
 
 // POST 
 app.post('/', (req, res) => {
-       try {
-        for (let i=0; i < req.body.length; i++) {
-            client.query('INSERT INTO movies(title, year, imdbid, type) VALUES($1, $2, $3, $4) RETURNING *',
-            [req.body[i].Title,
-            req.body[i].Year,
-            req.body[i].imdbID,
-            req.body[i].Type])}
-        } catch(error) {
-            console.log(error)
-        } finally {
-            res => res.status(201)
-        }
-    
-        // .then(response => res.status(201).json(response))
-        // .catch(error => {
-        //      res.status(500).send(error);
-        //  })
-        // .finally(() => client.end())
+    try { for (let i=0; i < req.body.length; i++) {
+        client.query('INSERT INTO movies(title, year, imdbid, type) VALUES($1, $2, $3, $4) RETURNING *;',
+        [req.body[i].Title,
+        req.body[i].Year,
+        req.body[i].imdbID,
+        req.body[i].Type])}
+    } catch(error) {
+     console.log(error)
+    } finally {
+      res.status(201).send("OK");
+     }
 });
