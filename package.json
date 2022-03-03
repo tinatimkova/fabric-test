@@ -20,8 +20,11 @@
   },
   "homepage": "https://github.com/tinatimkova/fabric-test#readme",
   "dependencies": {
+    "body-parser": "^1.19.2",
     "express": "^4.17.3",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "pg-format": "^1.0.4",
+    "pg-promise": "^10.11.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
