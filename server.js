@@ -42,16 +42,30 @@ let movies = [{"Title":"Armitage III: Dual Matrix","Year":"2002","imdbID":"tt030
 let query1 = format('INSERT INTO movies(title, year, imdbid, type) VALUES %L RETURNING *', movies);
 
 // POST 
-app.post('/', (req, res) => {
+app.post('/movie', (req, res) => {
     try { for (let i=0; i < req.body.length; i++) {
         client.query('INSERT INTO movies(title, year, imdbid, type) VALUES($1, $2, $3, $4) RETURNING *;',
-        [req.body[i].Title,
-        req.body[i].Year,
-        req.body[i].imdbID,
-        req.body[i].Type])}
+        [   req.body[i].Title,
+            req.body[i].Year,
+            req.body[i].imdbID,
+            req.body[i].Type
+        ])}
     } catch(error) {
      console.log(error)
     } finally {
       res.status(201).send("OK");
      }
 });
+
+app.post('/poster', (req, res) => {
+    try { for (let i=0; i < req.body.length; i++) {
+        if (req.body[i].Poster) {
+            client.query('INSERT INTO posters(movie_id, url) VALUES($1, $2) RETURNING *;',
+            [req.body[i].imdbID, req.body[i].Poster ])}
+        }
+    } catch(error) {
+     console.log(error)
+    } finally {
+      res.status(201).send("OK");
+     } 
+})
