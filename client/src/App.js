@@ -9,18 +9,30 @@ class App extends Component {
     loading: false
   }
 
-  handleClick = async() => {
+  handleClick = async(e) => {
+
     this.setState({ loading: true });
 
-    const res = await axios.get('http://www.omdbapi.com/?s=Matrix&apikey=720c3666');
+    const id = e.target.id
+
+    let url = (id === '1') ? 'http://www.omdbapi.com/?s=Matrix&apikey=720c3666'  :
+                (id === '2') ? 'http://www.omdbapi.com/?s=Matrix%20Reloaded&apikey=720c3666' : 
+                'http://www.omdbapi.com/?s=Matrix%20Revolutions&apikey=720c3666';
+
+    const res = await axios.get(url);
+
+    console.log(res, id)
 
     this.setState({ movies: res.data.Search, loading: false });
   }
 
   render () {
+    console.log(this.state.movies)
     return (
       <Fragment>
-        <button onClick={this.handleClick}>Search</button>
+        <button id='1' onClick={this.handleClick}>Search</button>
+        <button id='2' onClick={this.handleClick}>Search</button>
+        <button id='3' onClick={this.handleClick}>Search</button>
        <Movies loading={this.state.loading} movies={this.state.movies} />
       </Fragment>
     );
