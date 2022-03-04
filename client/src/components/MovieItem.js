@@ -1,19 +1,14 @@
 import  { Card } from 'react-bootstrap';
+import image from '../img/Placeholder.png';
 
 const MovieItem = ({movie: { Title, Year, Type, Poster }}) => {
         return (
-            // <ul>
-            //  <li><h3>{Title}</h3></li> 
-            //  <li>Release Date: {Year}</li>
-            //  <li><h5>{Type}</h5></li>
-            //  <li><img src={Poster} alt='movie poster'/></li>       
-            // </ul>
                 <Card>
-                    <Card.Img variant='top' src={Poster} alt='movie-poster' />
+                    <Card.Img variant='top' src={Poster === 'N/A' ? image : Poster } alt='movie-poster' style={{height: '70%'}} />
                     <Card.Body>
                         <Card.Title>{Title}</Card.Title>
                         <Card.Text>
-                            <h5>Release Date: {Year}</h5>
+                            Release Date: {Year}
                         </Card.Text>
                     </Card.Body>
                     <Card.Footer>
