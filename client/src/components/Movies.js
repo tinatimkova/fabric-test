@@ -1,6 +1,6 @@
 import MovieItem from './MovieItem';
 
-const Movies = ({ movies, loading}) => {
+const Movies = ({ movies }) => {
     return (
             <div className='movie-list'>
                 { movies.length > 0 ? movies.map(movie => (

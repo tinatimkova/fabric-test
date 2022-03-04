@@ -4,7 +4,6 @@ const { connectDB, client } = require('./database.js');
 const app = express();
 const port = 5000;
 const bodyParser = require('body-parser');
-const format = require('pg-format');
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -48,8 +47,7 @@ app.get('/posters', (req, res) => {
         })
 });
 
-
-// POST 
+// POST movies
 app.post('/movie', (req, res) => {
     try { for (let i=0; i < req.body.length; i++) {
         client.query('INSERT INTO movies(title, year, imdbid, type) VALUES($1, $2, $3, $4) ON CONFLICT (imdbid) DO NOTHING RETURNING *;',
@@ -65,6 +63,7 @@ app.post('/movie', (req, res) => {
      }
 });
 
+// POST posters
 app.post('/poster', (req, res) => {
     try { for (let i=0; i < req.body.length; i++) {
         if (req.body[i].Poster !== 'N/A') {
