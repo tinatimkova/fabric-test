@@ -10,22 +10,21 @@ class App extends Component {
     loading: false
   }
 
-  handleClick = async(e) => {
-
+  handleClick = (e) => {
     this.setState({ loading: true });
-
     const id = e.target.id
 
     let url = (id === '1') ? 'http://www.omdbapi.com/?s=Matrix&apikey=720c3666'  :
                 (id === '2') ? 'http://www.omdbapi.com/?s=Matrix%20Reloaded&apikey=720c3666' : 
                 'http://www.omdbapi.com/?s=Matrix%20Revolutions&apikey=720c3666';
 
-    const res = await axios.get(url);
+    axios.get(url)
+    .then(res => this.setState({ movies: res.data.Search, loading: false }))
 
-    this.setState({ movies: res.data.Search, loading: false });
-
-    const storedData = await axios.post('http://localhost:5000/movies', this.state.movies);
-    console.log(storedData)
+    axios.post('http://localhost:5000/movie', this.state.movies)
+    .then(response => console.log(response))
+    .then(() => axios.post('http://localhost:5000/poster', this.state.movies))
+    .catch(error => console.log(error))
   }
 
   render () {
