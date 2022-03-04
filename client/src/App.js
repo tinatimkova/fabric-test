@@ -2,6 +2,7 @@ import './App.css';
 import Movies from './components/Movies.js';
 import axios from 'axios';
 import { Component, Fragment } from 'react';
+import { Button } from 'react-bootstrap';
 
 class App extends Component {
   state = {
@@ -21,18 +22,17 @@ class App extends Component {
 
     const res = await axios.get(url);
 
-    console.log(res, id)
-
     this.setState({ movies: res.data.Search, loading: false });
   }
 
   render () {
-    console.log(this.state.movies)
     return (
       <Fragment>
-        <button id='1' onClick={this.handleClick}>Search</button>
-        <button id='2' onClick={this.handleClick}>Search</button>
-        <button id='3' onClick={this.handleClick}>Search</button>
+        <div className='button-group'>
+        <Button variant='outline-primary' id='1' onClick={this.handleClick}>Search</Button>
+        <Button variant='outline-secondary' id='2' onClick={this.handleClick}>Search</Button>
+        <Button variant='outline-warning' id='3' onClick={this.handleClick}>Search</Button>
+        </div>
        <Movies loading={this.state.loading} movies={this.state.movies} />
       </Fragment>
     );

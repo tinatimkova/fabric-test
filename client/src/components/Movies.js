@@ -2,7 +2,7 @@ import MovieItem from './MovieItem';
 
 const Movies = ({ movies, loading}) => {
     return (
-            <div>
+            <div className='movie-list'>
                 { movies.length > 0 ? movies.map(movie => (
                   <MovieItem key={movie.imdbID} movie={movie} /> 
                 )) : null}
