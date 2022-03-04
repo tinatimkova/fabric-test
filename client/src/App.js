@@ -23,6 +23,9 @@ class App extends Component {
     const res = await axios.get(url);
 
     this.setState({ movies: res.data.Search, loading: false });
+
+    const storedData = await axios.post('http://localhost:5000/movies', this.state.movies);
+    console.log(storedData)
   }
 
   render () {
