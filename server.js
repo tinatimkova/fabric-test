@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // these methods will parse 
 
 // ROUTES
 
-// GET 
-app.get('/', (req, res) => {
+// GET movies
+app.get('/movies', (req, res) => {
     client.query('Select * from movies')
         .then(response => {
             res.status(200).json(response.rows);
@@ -37,14 +37,22 @@ app.get('/', (req, res) => {
         })
 });
 
-let movies = [{"Title":"Armitage III: Dual Matrix","Year":"2002","imdbID":"tt0303678","Type":"movie","Poster":"https://m.media-amazon.com/images/M/MV5BOTUwOTY3Mjg1MF5BMl5BanBnXkFtZTcwODI2MTAyMQ@@._V1_SX300.jpg"},{"Title":"CR: Enter the Matrix","Year":"2009","imdbID":"tt1675286","Type":"game","Poster":"https://m.media-amazon.com/images/M/MV5BMTExMzY3NTQ1NjleQTJeQWpwZ15BbWU3MDAyMjk2NzM@._V1_SX300.jpg"}]
+// GET posters
+app.get('/posters', (req, res) => {
+    client.query('Select * from posters')
+        .then(response => {
+            res.status(200).json(response.rows);
+        })
+        .catch(error => {
+            res.status(500).send(error);
+        })
+});
 
-let query1 = format('INSERT INTO movies(title, year, imdbid, type) VALUES %L RETURNING *', movies);
 
 // POST 
 app.post('/movie', (req, res) => {
     try { for (let i=0; i < req.body.length; i++) {
-        client.query('INSERT INTO movies(title, year, imdbid, type) VALUES($1, $2, $3, $4) RETURNING *;',
+        client.query('INSERT INTO movies(title, year, imdbid, type) VALUES($1, $2, $3, $4) ON CONFLICT (imdbid) DO NOTHING RETURNING *;',
         [   req.body[i].Title,
             req.body[i].Year,
             req.body[i].imdbID,
@@ -59,8 +67,8 @@ app.post('/movie', (req, res) => {
 
 app.post('/poster', (req, res) => {
     try { for (let i=0; i < req.body.length; i++) {
-        if (req.body[i].Poster) {
-            client.query('INSERT INTO posters(movie_id, url) VALUES($1, $2) RETURNING *;',
+        if (req.body[i].Poster !== 'N/A') {
+            client.query('INSERT INTO posters(movie_id, url) VALUES($1, $2) ON CONFLICT (movie_id) DO NOTHING RETURNING *;',
             [req.body[i].imdbID, req.body[i].Poster ])}
         }
     } catch(error) {
