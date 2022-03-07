@@ -11,9 +11,9 @@ const [movies, setMovies] = useState([]);
   const handleClick = (e) => {
     const id = e.target.id
 
-    let url = (id === '1') ? 'http://www.omdbapi.com/?s=Matrix&apikey=720c3666'  :
-                (id === '2') ? 'http://www.omdbapi.com/?s=Matrix%20Reloaded&apikey=720c3666' : 
-                'http://www.omdbapi.com/?s=Matrix%20Revolutions&apikey=720c3666';
+    let url = (id === '1') ? 'https://www.omdbapi.com/?s=Matrix&apikey=720c3666'  :
+                (id === '2') ? 'https://www.omdbapi.com/?s=Matrix%20Reloaded&apikey=720c3666' : 
+                'https://www.omdbapi.com/?s=Matrix%20Revolutions&apikey=720c3666';
 
     // fetching data from 3rd party API
     axios.get(url)
