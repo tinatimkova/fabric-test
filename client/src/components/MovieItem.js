@@ -4,7 +4,7 @@ import image from '../img/Placeholder.png';
 const MovieItem = ({movie: { Title, Year, Type, Poster }}) => {
         return (
                 <Card>
-                    <Card.Img variant='top' src={Poster === 'N/A' ? image : Poster } alt='movie-poster' style={{height: '70%'}} />
+                    <Card.Img variant='top' src={Poster === 'N/A' ? image : Poster } alt='movie-poster' />
                     <Card.Body>
                         <Card.Title>{Title}</Card.Title>
                         <Card.Text>
