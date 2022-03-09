@@ -118,11 +118,11 @@ table {
 .movie-list {
   display: grid;
   max-width: 80%;
-  margin: 5em auto;
+  margin: 3em auto;
   gap: 1em;
 }
 
-@media (min-width: 1120px) {
+@media (min-width: 1200px) {
   .movie-list {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -150,6 +150,10 @@ table {
   .movie-list {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  .button-group {
+    flex-direction: column;
+  }
 }
 
 .button-group {
@@ -162,4 +166,5 @@ table {
 button.btn {
   padding: 0.5em 1em;
   font-size: 1.2em;
+  margin: 0.5em;
 }
