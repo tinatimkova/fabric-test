@@ -25,7 +25,7 @@ The development process included the following steps:
 
 ## Database
 
-| Movies |
+| Movies |             |
 | ------ | ----------- |
 | title  | text        |
 | year   | smallint    |
@@ -34,7 +34,7 @@ The development process included the following steps:
 
 _imdbid - primary key_
 
-| Posters  |
+| Posters  |            |
 | -------- | ---------- |
 | url      | text       |
 | movie_id | varchar(3) |
